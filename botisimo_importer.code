@@ -1,0 +1,43 @@
+using System;
+using Microsoft.VisualBasic.FileIO;
+
+public class CPHInline
+{
+    public bool Execute()
+    {
+        var path = args[@"filePath"].ToString();
+        using (TextFieldParser csvParser = new TextFieldParser(path))
+        {
+            CPH.LogDebug("Point_Importer: Started");
+            csvParser.CommentTokens = new string[]
+            {
+                "#"
+            };
+            csvParser.SetDelimiters(new string[] { "," });
+            csvParser.HasFieldsEnclosedInQuotes = true;
+            // Skip the row with the column names
+            csvParser.ReadLine();
+            while (!csvParser.EndOfData)
+            {
+                // Read current line fields, pointer moves to the next line.
+                string[] fields = csvParser.ReadFields();
+                string user = fields[0];
+                string points = fields[1];
+                string pointsimported = CPH.GetUserVar<string>(user, "points_imported", true);
+                if (pointsimported == null)
+                {
+                    //CPH.SendMessage(user);
+                    CPH.LogDebug("Point_Importer: Imported " + points + " points for " + user);
+                    int intpoints = Convert.ToInt32(points);
+                    int currentpoints = CPH.GetUserVar<int>(user, "points", true);
+                    int newpoints = currentpoints + intpoints;
+                    CPH.SetUserVar(user, "points", newpoints, true);
+                    CPH.SetUserVar(user, "points_imported", true, true);
+                }
+            }
+
+            CPH.LogDebug("Point_Importer: Completed");
+            return true;
+        }
+    }
+}
