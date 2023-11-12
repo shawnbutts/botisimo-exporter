@@ -29,7 +29,7 @@ public class CPHInline
                     //CPH.SendMessage(user);
                     CPH.LogDebug("Point_Importer: Imported " + points + " points for " + user);
                     int intpoints = Convert.ToInt32(points);
-                    int currentpoints = CPH.GetUserVar<int>(user, "points", true);
+                    int currentpoints = CPH.GetTwitchUserVar<int>(user, "points", true);
                     int newpoints = currentpoints + intpoints;
                     CPH.SetTwitchUserVar(user, "points", newpoints, true);
                     CPH.SetTwitchUserVar(user, "points_imported", true, true);
