@@ -31,8 +31,8 @@ public class CPHInline
                     int intpoints = Convert.ToInt32(points);
                     int currentpoints = CPH.GetUserVar<int>(user, "points", true);
                     int newpoints = currentpoints + intpoints;
-                    CPH.SetUserVar(user, "points", newpoints, true);
-                    CPH.SetUserVar(user, "points_imported", true, true);
+                    CPH.SetTwitchUserVar(user, "points", newpoints, true);
+                    CPH.SetTwitchUserVar(user, "points_imported", true, true);
                 }
             }
 
