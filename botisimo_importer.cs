@@ -23,16 +23,17 @@ public class CPHInline
                 string[] fields = csvParser.ReadFields();
                 string user = fields[0];
                 string points = fields[1];
-                string pointsimported = CPH.GetUserVar<string>(user, "points_imported", true);
-                if (pointsimported == null)
+                bool pointsimported = CPH.GetUserVar<bool?>(user, "points_imported", true) ?? false;
+                int currentpoints = CPH.GetUserVar<int?>("tood", "points", true) ?? -42;
+                if (!pointsimported && currentpoints 1= -42)
                 {
                     //CPH.SendMessage(user);
-                    CPH.LogDebug("Point_Importer: Imported " + points + " points for " + user);
                     int intpoints = Convert.ToInt32(points);
-                    int currentpoints = CPH.GetTwitchUserVar<int>(user, "points", true);
+                    CPH.LogDebug("Point_Importer: Imported " + points + " points for " + user);
                     int newpoints = currentpoints + intpoints;
-                    CPH.SetTwitchUserVar(user, "points", newpoints, true);
-                    CPH.SetTwitchUserVar(user, "points_imported", true, true);
+                    CPH.SetUserVar(user, "points", newpoints, true);
+                    CPH.SetUserVar(user, "points_imported", true, true);
+
                 }
             }
 
