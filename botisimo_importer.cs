@@ -25,7 +25,7 @@ public class CPHInline
                 string points = fields[1];
                 bool pointsimported = CPH.GetUserVar<bool?>(user, "points_imported", true) ?? false;
                 int currentpoints = CPH.GetUserVar<int?>("tood", "points", true) ?? -42;
-                if (!pointsimported && currentpoints 1= -42)
+                if (!pointsimported && currentpoints != -42)
                 {
                     //CPH.SendMessage(user);
                     int intpoints = Convert.ToInt32(points);
